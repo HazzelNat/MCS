@@ -32,11 +32,11 @@ class AddPetActivity: AppCompatActivity() {
 
         db = Firebase.firestore
 
-        addPetNameET = findViewById(R.id.addPetName)
-        addPetDescriptionET = findViewById(R.id.addPetDescription)
-        addPetImageURLET = findViewById(R.id.addPetImageURL)
-        addOwnerNameET = findViewById(R.id.addOwnerName)
-        addOwnerImageURLET = findViewById(R.id.addOwnerImageURL)
+        addPetNameET = findViewById(R.id.petName)
+        addPetDescriptionET = findViewById(R.id.petDescription)
+        addPetImageURLET = findViewById(R.id.petImage)
+        addOwnerNameET = findViewById(R.id.ownerName)
+        addOwnerImageURLET = findViewById(R.id.ownerImage)
 
         addButton = findViewById(R.id.addButton)
 

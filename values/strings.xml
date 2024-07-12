@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">PetAdoptionCenter</string>
+    <string name="logo">LOGOK</string>
+    <string name="pet_name">Pet Name</string>
+    <string name="owner_name">Owner Name</string>
+    <string name="pet_description">Pet Description</string>
+    <string name="my_map_api_key">AIzaSyBpdiECMFdw015LRmAv6QKpHZL5zOtyYug</string>
+    <string name="map">Map</string>
+    <string name="back">Back</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="login">LOGIN</string>
+    <string name="register">REGISTER</string>
+    <string name="didn_t_have_an_account_register_here">Didn\'t have an account? Register here</string>
+    <string name="already_have_an_account">Already have an account? Login here!</string>
+
+    <string name="add_pet">Add Pet</string>
+
+    <string name="pet_image">Pet Image</string>
+    <string name="profile_name">Profile Name</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="owner_image">Owner Image</string>
+</resources>

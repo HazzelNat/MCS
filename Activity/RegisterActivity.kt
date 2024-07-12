@@ -23,6 +23,7 @@ class RegisterActivity: AppCompatActivity() {
     private lateinit var registerButton: Button
     private lateinit var loginRE: TextView
     private var checkUser: Boolean = false
+    private var usernameExists: Boolean = false
 
     lateinit var db: FirebaseFirestore
 
@@ -32,14 +33,14 @@ class RegisterActivity: AppCompatActivity() {
 
         db = Firebase.firestore
 
-        usernameET = findViewById(R.id.username)
-        passwordET = findViewById(R.id.password)
-        emailET = findViewById(R.id.email)
-        phoneET = findViewById(R.id.phone)
+        usernameET = findViewById(R.id.registerUsername)
+        passwordET = findViewById(R.id.registerPassword)
+        emailET = findViewById(R.id.registerEmail)
+        phoneET = findViewById(R.id.registerPhone)
         maleRB = findViewById(R.id.radio_male)
         femaleRB = findViewById(R.id.radio_female)
-        registerButton = findViewById(R.id.register)
-        loginRE = findViewById(R.id.loginRE)
+        registerButton = findViewById(R.id.registerButton)
+        loginRE = findViewById(R.id.login)
         var isMale: Boolean
 
         registerButton.setOnClickListener {
@@ -55,10 +56,12 @@ class RegisterActivity: AppCompatActivity() {
                 return@setOnClickListener
             }
 
-//            if (usernameExists(username)) {
-//                Toast.makeText(this, "Username already exists", Toast.LENGTH_SHORT).show()
-//                return@setOnClickListener
-//            }
+            usernameExists = checkUser(username)
+
+            if (usernameExists == true) {
+                Toast.makeText(this, "Username already exists", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             if (password.length < 8) {
                 Toast.makeText(this, "Password must be at least 8 characters long", Toast.LENGTH_SHORT).show()
@@ -95,16 +98,6 @@ class RegisterActivity: AppCompatActivity() {
 
     }
 
-//    private fun usernameExists(username: String): Boolean {
-//        checkUser(username)
-//
-//        if (checkUser){
-//            return false
-//        }
-//
-//        return true
-//    }
-
     private fun addUser (username:String, password:String, email:String, phonenumber:String, isMale:Boolean){
         val userInfo = userInfo(username, password, email, phonenumber, isMale)
         db.collection("User")
@@ -117,13 +110,15 @@ class RegisterActivity: AppCompatActivity() {
             }
     }
 
-//    private fun checkUser (username: String) {
-//        db.collection("User").get().addOnSuccessListener { querySnapshot ->
-//            for (document in querySnapshot){
-//                if (username == document.get("username").toString()){
-//                    checkUser = false
-//                }
-//            }
-//        }
-//    }
+    private fun checkUser (username: String):Boolean {
+        db.collection("User").get().addOnSuccessListener { querySnapshot ->
+            for (document in querySnapshot){
+                if (username == document.get("username").toString()){
+                    checkUser = true
+
+                }
+            }
+        }
+        return checkUser
+    }
 }
