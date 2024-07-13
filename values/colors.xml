@@ -15,4 +15,8 @@
     <color name="button_normal_start">#FF9800</color>
     <color name="button_normal_end">#F57C00</color>
 
+    <color name="background">#EFF6FB</color>
+
+    <color name="button">#205C83</color>
+
 </resources>

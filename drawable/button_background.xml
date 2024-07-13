@@ -13,7 +13,7 @@
         <shape>
             <corners android:radius="24dp" />
             <gradient
-                android:startColor="@color/button_normal_start"
+                android:startColor="#FF9800"
                 android:endColor="@color/button_normal_end"
                 android:angle="90" />
         </shape>

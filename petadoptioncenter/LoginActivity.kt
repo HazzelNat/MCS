@@ -14,10 +14,12 @@ import com.example.petadoptioncenter.RegisterActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
+
 
     private lateinit var usernameET: EditText
     private lateinit var passwordET: EditText
@@ -31,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         db = Firebase.firestore
+
 
         usernameET = findViewById(R.id.username)
         passwordET = findViewById(R.id.password)

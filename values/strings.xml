@@ -15,7 +15,7 @@
     <string name="register">REGISTER</string>
     <string name="didn_t_have_an_account_register_here">Didn\'t have an account? Register here</string>
     <string name="already_have_an_account">Already have an account? Login here!</string>
-
+    <string name="choose_image">Choose Image</string>
     <string name="add_pet">Add Pet</string>
 
     <string name="pet_image">Pet Image</string>
