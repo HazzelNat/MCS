@@ -40,7 +40,13 @@ class HomeActivity : AppCompatActivity(), PetAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(pet: Pet) {
-        val intent = Intent(this, PetDetailActivity::class.java)
+        val intent = Intent(this, PetDetailActivity::class.java).apply {
+            putExtra("name", pet.name)
+            putExtra("description", pet.description)
+            putExtra("imageUrl", pet.imageUrl) // Ensure this is a valid URL
+            putExtra("ownerName", pet.ownerName)
+            putExtra("ownerProfilePic", pet.ownerProfilePic) // Ensure this is a valid URL
+        }
         startActivity(intent)
     }
 
