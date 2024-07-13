@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "461355060214",
+    "project_id": "mcs-project-786d1",
+    "storage_bucket": "mcs-project-786d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461355060214:android:7565b504e87d0ea84495d7",
+        "android_client_info": {
+          "package_name": "com.example.mcs_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrizzwQCcOoYsSuZqS92nuyC81Bag_G4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:461355060214:android:1138aa9992eb3b204495d7",
+        "android_client_info": {
+          "package_name": "com.example.petadoptioncenter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrizzwQCcOoYsSuZqS92nuyC81Bag_G4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
