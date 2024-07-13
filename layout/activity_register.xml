@@ -35,6 +35,8 @@
                 android:minHeight="48dp"
                 android:background="@drawable/box"
                 android:padding="12dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_hint"
                 app:layout_constraintTop_toBottomOf="@id/logo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +49,8 @@
                 android:layout_marginTop="16dp"
                 android:autofillHints="password"
                 android:hint="@string/password"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_hint"
                 android:inputType="textPassword"
                 android:minHeight="48dp"
                 android:background="@drawable/box"
@@ -63,6 +67,8 @@
                 android:layout_marginTop="16dp"
                 android:autofillHints="email"
                 android:background="@drawable/box"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_hint"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:minHeight="48dp"
@@ -77,6 +83,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:autofillHints="phone"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_hint"
                 android:hint="@string/phone"
                 android:inputType="phone"
                 android:minHeight="48dp"
@@ -104,6 +112,8 @@
                     android:id="@+id/radio_male"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_hint"
                     android:text="Male"
                     android:checked="true" />
 
@@ -111,6 +121,8 @@
                     android:id="@+id/radio_female"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/text_hint"
                     android:text="Female" />
             </RadioGroup>
 

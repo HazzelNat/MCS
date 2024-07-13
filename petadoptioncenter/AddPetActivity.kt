@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -19,62 +18,79 @@ import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.FirebaseStorage
 
-class AddPetActivity: AppCompatActivity() {
+class AddPetActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var addPetNameET: EditText
     private lateinit var addPetDescriptionET: EditText
     private lateinit var petImage: ImageView
-    private lateinit var addPetImage: Button
+    private lateinit var choosePetImageButton: Button
     private lateinit var addOwnerNameET: EditText
-    private lateinit var addOwnerImageURLET: EditText
+    private lateinit var ownerImage: ImageView
+    private lateinit var chooseOwnerImageButton: Button
     private lateinit var addButton: Button
-    var storageRef = Firebase.storage.reference
+    private var imageUri: Uri? = null
+    private val storageRef = FirebaseStorage.getInstance().reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_pet)
 
         db = Firebase.firestore
-        storageRef = Firebase.storage.reference
 
         addPetNameET = findViewById(R.id.petName)
         addPetDescriptionET = findViewById(R.id.petDescription)
-        addPetImage = findViewById(R.id.petImage)
-        addOwnerNameET = findViewById(R.id.ownerName)
-        addOwnerImageURLET = findViewById(R.id.ownerImage)
-
         petImage = findViewById(R.id.petImage)
+        choosePetImageButton = findViewById(R.id.chooseImageButton)
+        addOwnerNameET = findViewById(R.id.ownerName)
+        ownerImage = findViewById(R.id.ownerImage)
+        chooseOwnerImageButton = findViewById(R.id.chooseImageButton2)
+        addButton = findViewById(R.id.addButton)
 
-        addPetImage.setOnClickListener {
-            // PICK INTENT picks item from data
-            // and returned selected item
+        choosePetImageButton.setOnClickListener {
             val galleryIntent = Intent(Intent.ACTION_PICK)
-            // here item is type of image
             galleryIntent.type = "image/*"
-            // ActivityResultLauncher callback
             imagePickerActivityResult.launch(galleryIntent)
         }
 
-        addButton = findViewById(R.id.addButton)
+        chooseOwnerImageButton.setOnClickListener {
+            val galleryIntent = Intent(Intent.ACTION_PICK)
+            galleryIntent.type = "image/*"
+            imagePickerActivityResult.launch(galleryIntent)
+        }
 
-        addButton.setOnClickListener(View.OnClickListener {
+        addButton.setOnClickListener {
             val addPetName = addPetNameET.text.toString()
             val addPetDescription = addPetDescriptionET.text.toString()
-            val addPetImage = addPetImage.text.toString()
             val addOwnerName = addOwnerNameET.text.toString()
-            val addOwnerImageURL = addOwnerImageURLET.text.toString()
+            val addOwnerImageURL = ownerImage.contentDescription.toString()  // Fixed
 
-            addPet(addPetName, addPetDescription, addPetImage, addOwnerName, addOwnerImageURL)
+            if (imageUri != null) {
+                val fileName = getFileName(applicationContext, imageUri!!)
+                val uploadTask = storageRef.child("images/$fileName").putFile(imageUri!!)
+
+                uploadTask.addOnSuccessListener {
+                    storageRef.child("images/$fileName").downloadUrl.addOnSuccessListener { uri ->
+                        val imageUrl = uri.toString()
+                        addPet(addPetName, addPetDescription, imageUrl, addOwnerName, addOwnerImageURL)
+                    }.addOnFailureListener { e ->
+                        Log.e("Firebase", "Error getting download URL", e)
+                    }
+                }.addOnFailureListener { e ->
+                    Log.e("Firebase", "Error uploading image", e)
+                }
+            } else {
+                addPet(addPetName, addPetDescription, "", addOwnerName, "")
+            }
+
             val intent = Intent(this, HomeActivity::class.java)
             startActivity(intent)
-        })
-
+        }
     }
 
-    private fun addPet (name: String, description: String, petImage:String, ownerName:String, ownerImage:String){
+    private fun addPet(name: String, description: String, petImage: String, ownerName: String, ownerImage: String) {
         val pet = Pet(name, description, petImage, ownerName, ownerImage)
         db.collection("Pet")
             .add(pet)
@@ -86,39 +102,14 @@ class AddPetActivity: AppCompatActivity() {
             }
     }
 
-
-
-    private var imagePickerActivityResult: ActivityResultLauncher<Intent> =
-    // lambda expression to receive a result back, here we
-        // receive single item(photo) on selection
-        registerForActivityResult( ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result != null) {
-                // getting URI of selected Image
-                val imageUri: Uri? = result.data?.data
-
-                // val fileName = imageUri?.pathSegments?.last()
-
-                // extract the file name with extension
-                val sd = getFileName(applicationContext, imageUri!!)
-
-                // Upload Task with upload to directory 'file'
-                // and name of the file remains same
-                val uploadTask = storageRef.child("file/$sd").putFile(imageUri)
-
-                // On success, download the file URL and display it
-                uploadTask.addOnSuccessListener {
-                    // using glide library to display the image
-                    storageRef.child("upload/$sd").downloadUrl.addOnSuccessListener {
-                        Glide.with(this@AddPetActivity)
-                            .load(it)
-                            .into(petImage)
-
-                        Log.e("Firebase", "download passed")
-                    }.addOnFailureListener {
-                        Log.e("Firebase", "Failed in downloading")
-                    }
-                }.addOnFailureListener {
-                    Log.e("Firebase", "Image Upload fail")
+    private val imagePickerActivityResult: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                imageUri = result.data?.data
+                if (imageUri != null) {
+                    Glide.with(this).load(imageUri).into(petImage)
+                } else {
+                    Log.e("AddPetActivity", "Image URI is null")
                 }
             }
         }
@@ -127,15 +118,12 @@ class AddPetActivity: AppCompatActivity() {
     private fun getFileName(context: Context, uri: Uri): String? {
         if (uri.scheme == "content") {
             val cursor = context.contentResolver.query(uri, null, null, null, null)
-            cursor.use {
-                if (cursor != null) {
-                    if(cursor.moveToFirst()) {
-                        return cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-                    }
+            cursor?.use {
+                if (it.moveToFirst()) {
+                    return it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
                 }
             }
         }
-        return uri.path?.lastIndexOf('/')?.let { uri.path?.substring(it) }
+        return uri.path?.substringAfterLast('/')
     }
-
 }

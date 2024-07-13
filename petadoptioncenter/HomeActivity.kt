@@ -31,9 +31,6 @@ class HomeActivity : AppCompatActivity(), PetAdapter.OnItemClickListener {
         addButton = findViewById(R.id.addButton)
         db = Firebase.firestore
 
-//        petAdapter = PetAdapter(petsArrayList, this)
-//        petRecyclerView.adapter = petAdapter
-
         loadPets()
 
         addButton.setOnClickListener {
@@ -46,46 +43,6 @@ class HomeActivity : AppCompatActivity(), PetAdapter.OnItemClickListener {
         val intent = Intent(this, PetDetailActivity::class.java)
         startActivity(intent)
     }
-
-//    private fun getDummyPets(): List<Pet> {
-//        return listOf(
-//            Pet(
-//                name = "Bella",
-//                description = "A friendly and playful Labrador Retriever.",
-//                imageUrl = "https://example.com/images/bella.jpg",
-//                ownerName = "John Doe",
-//                ownerProfilePic = "https://example.com/images/john.jpg"
-//            ),
-//            Pet(
-//                name = "Max",
-//                description = "An energetic and loyal German Shepherd.",
-//                imageUrl = "https://example.com/images/max.jpg",
-//                ownerName = "Jane Smith",
-//                ownerProfilePic = "https://example.com/images/jane.jpg"
-//            ),
-//            Pet(
-//                name = "Luna",
-//                description = "A sweet and gentle Golden Retriever.",
-//                imageUrl = "https://example.com/images/luna.jpg",
-//                ownerName = "Alice Johnson",
-//                ownerProfilePic = "https://example.com/images/alice.jpg"
-//            ),
-//            Pet(
-//                name = "Charlie",
-//                description = "A curious and adventurous Beagle.",
-//                imageUrl = "https://example.com/images/charlie.jpg",
-//                ownerName = "Bob Brown",
-//                ownerProfilePic = "https://example.com/images/bob.jpg"
-//            ),
-//            Pet(
-//                name = "Lucy",
-//                description = "A loving and protective Bulldog.",
-//                imageUrl = "https://example.com/images/lucy.jpg",
-//                ownerName = "Emma Davis",
-//                ownerProfilePic = "https://example.com/images/emma.jpg"
-//            )
-//        )
-//    }
 
     private fun loadPets() {
         db.collection("Pet")

@@ -3,6 +3,7 @@ package com.example.petadoptioncenter
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,8 +20,8 @@ class PetDetailActivity : AppCompatActivity() {
         val petDetailDescription: TextView = findViewById(R.id.petDetailDescription)
         val ownerDetailProfilePic: ImageView = findViewById(R.id.ownerDetailProfilePic)
         val ownerDetailName: TextView = findViewById(R.id.ownerDetailName)
-        val backToHomeButton: Button = findViewById(R.id.backToHomeButton)
-        val viewOnMapButton: Button = findViewById(R.id.viewOnMapButton)
+        val backToHomeButton: ImageButton = findViewById(R.id.backToHomeButton)
+        val viewOnMapButton: ImageButton = findViewById(R.id.viewOnMapButton)
 
         val name = intent.getStringExtra("name")
         val description = intent.getStringExtra("description")
